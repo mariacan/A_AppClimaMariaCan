@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CLIMA</string>
+    <string name="texto_grados">23°</string>
+    <string name="texto_ciudad">Felipe Carrillo Puerto</string>
+    <string name="texto_estatus">Nublado</string>
+
+    <string name="texto_bienvenida">BIENVENIDO a mi APP del CLIMA,
+    para poder ver una ciudad selecciona la opción de abajo.</string>
+
+    <string name="textp_boton_cancun">Clima de la ciudad de CANCÚN</string>
+    <string name="textp_boton_fcp">Clima de la ciudad de FELIPE CARRILLO PUERTO</string>
+    <string name="textp_boton_chetumal">Clima de la ciudad de CHETUMAL</string>
+    <string name="textp_boton_bacalar">Clima de la ciudad de BACALAR</string>
+</resources>
