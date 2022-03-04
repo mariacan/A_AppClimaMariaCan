@@ -23,22 +23,22 @@ class Ciudades : AppCompatActivity() {
 
         bCancun.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(TAG, "ciudad-cancun")
+            intent.putExtra(TAG, "3531673")
             startActivity(intent)
         })
         bfcp.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(TAG, "ciudad-felipe carrillo puerto")
+            intent.putExtra(TAG, "3527639")
             startActivity(intent)
         })
         bChetumal.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(TAG, "ciudad-chetumal")
+            intent.putExtra(TAG, "3531023")
             startActivity(intent)
         })
         bBacalar.setOnClickListener(View.OnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(TAG, "ciudad-bacalar")
+            intent.putExtra(TAG, "3532465")
             startActivity(intent) //Al dar click al boton te mandará al MainActivity(Información de la ciudad).
         })
     }

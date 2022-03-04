@@ -2,8 +2,14 @@ package com.example.appclimamariacan
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,32 +27,34 @@ class MainActivity : AppCompatActivity() {
 
         val ciudad = intent.getStringExtra("com.example.appclimamariacan.ciudades.CIUDAD")
 
-        val ciudaddCan = Ciudad("Ciudad de Cancún", 23, "Nublado")
-        val ciudaddFcp = Ciudad("Ciudad de Felipe Carrillo Puerto", 25, "Soleado")
-        val ciudaddChe = Ciudad("Ciudad de Chetumal", 19, "Chubascos")
-        val ciudaddBac = Ciudad("Ciudad de Bacalar", 15, "Lluvia")
-        if(ciudad == "ciudad-cancun"){
-            //mostar informacion ciudaddcan
-            tvCiudad?.text = ciudaddCan.nombre
-            tvGrados?.text = ciudaddCan.grados.toString() + "°"
-            tvEstatus?.text = ciudaddCan.estatus
-        }else if(ciudad == "ciudad-felipe carrillo puerto"){
-            //mostrar información ciudaddFcp
-            tvCiudad?.text = ciudaddFcp.nombre
-            tvGrados?.text = ciudaddFcp.grados.toString() + "°"
-            tvEstatus?.text = ciudaddFcp.estatus
-        }else if(ciudad == "ciudad-chetumal"){
-            //mostrar informacion ciudaddChe
-            tvCiudad?.text = ciudaddChe.nombre
-            tvGrados?.text = ciudaddChe.grados.toString() + "°"
-            tvEstatus?.text = ciudaddChe.estatus
-        }else if(ciudad == "ciudad-bacalar"){
-            //mostrar información ciudaddBac
-            tvCiudad?.text = ciudaddBac.nombre
-            tvGrados?.text = ciudaddBac.grados.toString() + "°"
-            tvEstatus?.text = ciudaddBac.estatus
+        if(Network.hayRed(this)){
+            //ejecutar solicitud HTTP
+            solicitudHTTPVolley("https://api.openweathermap.org/data/2.5/weather?id="+ciudad+"&appid=de72b2851efe338c4ee4cee2a5385a03&units=metric&lang=es")
+            //1254df0aa2abc6673823db9d920d4ae3
+            //Cancún - 3531673,
         }else{
-            Toast.makeText(this, "No se encuentra la información", Toast.LENGTH_SHORT).show()
+            //mostrar mensaje error
+            Toast.makeText(this, "No hay RED", Toast.LENGTH_SHORT).show()
         }
+    }
+    //Método para Volley
+    private fun solicitudHTTPVolley(url:String){
+        val queue = Volley.newRequestQueue(this)
+
+        val solicitud = StringRequest(Request.Method.GET, url, Response.Listener<String>{
+                response ->
+            try {
+                Log.d("solicitudHTTPVolley", response)
+
+                val  gson = Gson()
+                val ciudad = gson.fromJson(response, Ciudad::class.java)
+                tvCiudad?.text = ciudad.name
+                tvGrados?.text = ciudad.main?.temp.toString() + "°"
+                tvEstatus?.text = ciudad.weather?.get(0)?.description
+            }catch (e: Exception){
+                //
+            }
+        }, Response.ErrorListener {  })
+        queue.add(solicitud)
     }
 }
